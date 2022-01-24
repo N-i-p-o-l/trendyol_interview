@@ -14,9 +14,13 @@ import javax.inject.Inject
 class HomeViewModel
 @Inject constructor(private val repository: TrendYolRepository) : ViewModel() {
 
-    var isLoading = mutableStateOf(false)
     var loadError = mutableStateOf("")
+    var isLoading = mutableStateOf(false)
     var widgets = mutableStateOf<List<Widget>>(listOf())
+
+    init {
+        loadWidgets()
+    }
 
     fun loadWidgets() {
         viewModelScope.launch {
@@ -25,15 +29,18 @@ class HomeViewModel
             when(val result = repository.getWidgets()) {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    loadError.value = ""
                     isLoading.value = false
 
-                    result.data?.let {
-                        widgets.value = it.widgets
+                    if (result.data != null) {
+                        loadError.value = ""
+                        widgets.value = result.data.widgets
+                    }
+                    else {
+                        loadError.value = result.message ?: "Unknown Error"
                     }
                 }
                 is Resource.Error -> {
-                    loadError.value = result.message!!
+                    loadError.value = result.message ?: "Unknown Error"
                     isLoading.value = false
                 }
             }

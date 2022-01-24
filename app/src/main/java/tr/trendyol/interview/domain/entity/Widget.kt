@@ -2,13 +2,13 @@ package tr.trendyol.interview.domain.entity
 
 class ListWidgets(val widgets: List<Widget>)
 
-data class Widget(val bannerContents: BannerContents,
-                  val type: Type,
-                  val displayType: DisplayType,
+data class Widget(val bannerContents: List<BannerContent>,
+                  val type: Type?,
+                  val displayType: DisplayType?,
                   val id: Long,
                   val displayCount: Int)
 
-data class BannerContents(val title: String,
+data class BannerContent(val title: String,
                           val displayOrder: Int,
                           val imageUrl: String)
 
@@ -17,5 +17,5 @@ enum class Type {
 }
 
 enum class DisplayType {
-    SINGLE, CAROUSEL, BANNER, LISTING
+    SINGLE, SLIDER
 }
