@@ -15,12 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import okhttp3.internal.wait
+import tr.trendyol.interview.domain.entity.BannerContent
 import tr.trendyol.interview.presentation.home.components.WidgetList
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel,
+    navToDetail: (BannerContent) -> Unit
     )
 {
     Surface(
@@ -42,8 +43,8 @@ fun HomeScreen(
                 },
                 backgroundColor = Color.White
             )
-            Spacer(modifier = Modifier.size(16.dp))
-            WidgetList(navController = navController, viewModel = viewModel)
+            Spacer(modifier = Modifier.size(8.dp))
+            WidgetList(viewModel, navToDetail)
         }
     }
 }

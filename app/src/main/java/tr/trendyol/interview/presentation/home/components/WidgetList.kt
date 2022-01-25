@@ -1,24 +1,24 @@
 package tr.trendyol.interview.presentation.home.components
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import tr.trendyol.interview.domain.entity.BannerContent
 import tr.trendyol.interview.domain.entity.DisplayType
 import tr.trendyol.interview.domain.entity.Type
 import tr.trendyol.interview.presentation.home.HomeViewModel
 
 @Composable
 fun WidgetList(
-    navController: NavController,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    navToDetail: (BannerContent) -> Unit
 ) {
     val isLoading by remember {
         viewModel.isLoading
@@ -38,24 +38,29 @@ fun WidgetList(
                     when (widget.type) {
                         Type.BANNER -> {
                             if (widget.bannerContents.isNotEmpty()) {
-                                BannerContent(banner = widget.bannerContents[0])
-                                Spacer(modifier = Modifier.size(16.dp))
+                                Banner(widget.bannerContents[0], navToDetail)
+                                Spacer(modifier = Modifier.height(8.dp))
                             }
                         }
-                        Type.PRODUCT -> {
-                        }
-                        Type.SLIDER -> {
-                        }
+                        else -> {}
                     }
                 }
                 DisplayType.SLIDER -> {
                     when (widget.type) {
                         Type.BANNER -> {
+                            if (widget.bannerContents.isNotEmpty()) {
+                                LazyRow() {
+                                    items(widget.bannerContents.size - 1) { row ->
+                                        Product(widget.bannerContents[row])
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                    }
+                                }
+                            }
                         }
                         Type.PRODUCT -> {
+                            // Couldn't find products field
                         }
-                        Type.SLIDER -> {
-                        }
+                        else -> {}
                     }
                 }
             }

@@ -3,11 +3,9 @@ package tr.trendyol.interview.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import dagger.hilt.android.AndroidEntryPoint
-import tr.trendyol.interview.presentation.home.HomeScreen
 import tr.trendyol.interview.theme.TrendYolTheme
 
 @AndroidEntryPoint
@@ -16,11 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TrendYolTheme {
-                val navController = rememberNavController()
-                NavHost(navController, startDestination = "home") {
-                    composable(route = "home") {
-                        HomeScreen(navController = navController)
-                    }
+                Surface(color = MaterialTheme.colors.background) {
+                    TrendYolApp()
                 }
             }
         }

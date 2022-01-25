@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -37,39 +36,28 @@ import coil.transform.Transformation
 import tr.trendyol.interview.domain.entity.BannerContent
 
 @Composable
-fun Banner(
-    banner: BannerContent,
-    navToDetail: (BannerContent) -> Unit,
-    modifier: Modifier = Modifier,
+fun Product(
+    banner: BannerContent
 ) {
     Column(
-        modifier
-            .wrapContentSize()
-            .clickable {
-                navToDetail(banner)
-            }
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(8.dp))
     ) {
-        val configuration = LocalConfiguration.current
-        val screenHeight = configuration.screenHeightDp.dp
-        val widthHeight = configuration.screenWidthDp.dp
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(widthHeight)
-        ) {
-            Image(
-                painter = rememberImagePainter(
-                    data = banner.imageUrl,
-                    builder = {
-                        crossfade(true)
-                        size(OriginalSize)
-                    }
-                ),
-                contentDescription = banner.title,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
+        Image(
+            painter = rememberImagePainter(
+                data = banner.imageUrl,
+                builder = {
+                    crossfade(true)
+                    size(OriginalSize)
+                }
+            ),
+            contentDescription = banner.title,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(banner.title, modifier = Modifier.align(Alignment.CenterHorizontally))
+        Spacer(modifier = Modifier.height(4.dp))
     }
 }
