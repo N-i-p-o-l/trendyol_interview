@@ -10,13 +10,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import tr.trendyol.interview.BuildConfig
 import tr.trendyol.interview.data.TrendYolApi
-import tr.trendyol.interview.data.repository.TrendYolRepositoryImpl
-import tr.trendyol.interview.domain.repository.TrendYolRepository
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -25,7 +24,11 @@ class AppModule {
         if (BuildConfig.DEBUG) logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         else logging.level = HttpLoggingInterceptor.Level.NONE
 
-        return OkHttpClient.Builder().addInterceptor(logging).build();
+        return OkHttpClient.Builder()
+            .connectTimeout(60L, TimeUnit.SECONDS)
+            .readTimeout(60L, TimeUnit.SECONDS)
+            .addInterceptor(logging)
+            .build()
     }
 
     @Provides
@@ -37,9 +40,4 @@ class AppModule {
             .client(client)
             .build()
             .create(TrendYolApi::class.java)
-
-    @Provides
-    @Singleton
-    fun provideTrendYolRepository(api: TrendYolApi): TrendYolRepository =
-        TrendYolRepositoryImpl(api)
 }
