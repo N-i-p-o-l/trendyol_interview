@@ -70,11 +70,8 @@ fun TrendYolAppMain() {
                 val order = navController.currentBackStackEntry?.arguments?.getInt("order")
                 val imgUrl = navController.currentBackStackEntry?.arguments?.getString("imgUrl")
 
-                DetailScreen(banner = BannerContent(
-                    title ?: "", order ?: 1, imgUrl ?: "")
-                ) {
-                    navController.navigateUp()
-                }
+                DetailScreen(banner = BannerContent(title ?: "", order ?: 1, imgUrl ?: ""),
+                    onBackPressed = { navController.navigateUp() })
             }
         }
     }

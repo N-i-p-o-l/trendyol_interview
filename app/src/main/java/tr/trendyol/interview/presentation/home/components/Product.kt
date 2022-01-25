@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -37,25 +38,32 @@ import tr.trendyol.interview.domain.entity.BannerContent
 
 @Composable
 fun Product(
-    banner: BannerContent
+    banner: BannerContent,
+    navToDetail: (BannerContent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier
             .fillMaxSize()
-            .clip(RoundedCornerShape(8.dp))
+            .clickable {
+                navToDetail(banner)
+            }
     ) {
-        Image(
-            painter = rememberImagePainter(
-                data = banner.imageUrl,
-                builder = {
-                    crossfade(true)
-                    size(OriginalSize)
-                }
-            ),
-            contentDescription = banner.title,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        Card() {
+            Image(
+                painter = rememberImagePainter(
+                    data = banner.imageUrl,
+                    builder = {
+                        crossfade(true)
+                        size(OriginalSize)
+                    }
+                ),
+                contentDescription = banner.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
         Spacer(modifier = Modifier.height(4.dp))
         Text(banner.title, modifier = Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.height(4.dp))

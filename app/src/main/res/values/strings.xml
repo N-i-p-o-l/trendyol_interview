@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TrendYol</string>
 
+    <string name="home">Home</string>
     <string name="retry_label">Retry</string>
     <string name="connection_error">Connection Error</string>
     <string name="check_connection">Please check your connection</string>

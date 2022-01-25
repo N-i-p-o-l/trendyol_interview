@@ -1,13 +1,14 @@
 package tr.trendyol.interview.presentation.home.components
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import tr.trendyol.interview.domain.entity.BannerContent
@@ -30,7 +31,9 @@ fun WidgetList(
         viewModel.widgets
     }
 
-    LazyColumn() {
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+    ) {
         items(widgets.size - 1) {
             val widget = widgets[it]
             when (widget.displayType) {
@@ -51,7 +54,7 @@ fun WidgetList(
                             if (widget.bannerContents.isNotEmpty()) {
                                 LazyRow() {
                                     items(widget.bannerContents.size - 1) { row ->
-                                        Product(widget.bannerContents[row])
+                                        Product(widget.bannerContents[row], navToDetail)
                                         Spacer(modifier = Modifier.width(8.dp))
                                     }
                                 }
@@ -63,6 +66,17 @@ fun WidgetList(
                         else -> {}
                     }
                 }
+            }
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colors.primary)
+        }
+        if (loadError.isNotEmpty()) {
+            RetrySection(error = loadError) {
+                viewModel.loadWidgets()
             }
         }
     }
