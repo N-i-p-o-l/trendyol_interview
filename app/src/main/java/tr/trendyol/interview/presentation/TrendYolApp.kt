@@ -20,6 +20,7 @@ import tr.trendyol.interview.domain.entity.BannerContent
 import tr.trendyol.interview.presentation.detail.DetailScreen
 import tr.trendyol.interview.presentation.home.HomeScreen
 import tr.trendyol.interview.presentation.home.HomeViewModel
+import tr.trendyol.interview.presentation.splash.SplashScreen
 
 @Composable
 fun TrendYolApp() {
@@ -37,7 +38,12 @@ fun TrendYolApp() {
 fun TrendYolAppMain() {
     val navController = rememberNavController()
     Scaffold() {
-        NavHost(navController, startDestination = "home") {
+        NavHost(navController, startDestination = Screens.SplashScreen.route) {
+            composable(Screens.SplashScreen.route) {
+                SplashScreen {
+                    navController.navigate(Screens.HomeScreen.route)
+                }
+            }
             composable(Screens.HomeScreen.route) {
                 val homeViewModel = hiltViewModel<HomeViewModel>()
                 HomeScreen(homeViewModel, navToDetail = {
@@ -74,6 +80,7 @@ fun TrendYolAppMain() {
 }
 
 sealed class Screens (val route: String) {
+    object SplashScreen: Screens("splash")
     object HomeScreen: Screens("home")
     object DetailScreen: Screens("detail")
 }

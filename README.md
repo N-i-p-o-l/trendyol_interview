@@ -4,11 +4,14 @@
 
 - Android Studio Arctic Fox
 
-## Stack
+## Top features
 
+- SOLID
 - Clean Arch
 - Single Activity
 - No fragments
+
+## Libraries used
 - Jetpack Compose
 - Navigation Compose
 - Kotlin Coroutines
@@ -17,5 +20,9 @@
 
 ## Screenshots
 <pre>
-<img src="/docs/home.jpg" alt="ss-movie-home" width="240" height="420" />
+<img src="/docs/splash.png" alt="ss-movie-home" width="200" height="420" /><img src="/docs/home.png" alt="ss-movie-home" width="200" height="420" /><img src="/docs/detail.png" alt="ss-movie-home" width="200" height="420" />
 </pre>
+
+## Things to do
+- Products page (coulnd't find products field in interview mock json)
+- Database Cache

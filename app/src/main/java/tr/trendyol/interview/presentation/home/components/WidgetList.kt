@@ -32,7 +32,7 @@ fun WidgetList(
     }
 
     LazyColumn(
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp),
     ) {
         items(widgets.size - 1) {
             val widget = widgets[it]
