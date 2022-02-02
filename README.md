@@ -24,5 +24,5 @@
 </pre>
 
 ## Things to do
-- Products page (coulnd't find products field in interview mock json)
+- Products page
 - Database Cache
